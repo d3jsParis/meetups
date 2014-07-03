@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+
+	<script type="text/javascript" src="../src/d3.js"></script>
+
+<style>
+
+circle.dot {
+  fill: steelblue;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+
+</head>
+
+<body>
+
+  <button id="clickMe"> Button </button>
+
+	<script type="text/javascript">
+
+// variables utiles 
+
+var margin = {top: 40, right: 40, bottom: 40, left: 40},
+    width = 960,
+    height = 500;
+
+ var data = [],
+   nb_bulles = 500,
+   taille_bulle = 10,
+   bleu = "#1f77b4",
+   nb_bulles_width = 4;
+
+// Création du dataset
+
+for (i=0; i < nb_bulles; i++) {
+data.push({"x": Math.random(), "y": Math.random()})
+}
+
+
+var vis = d3.select("body")
+.append("svg:svg")
+.attr("width", width)
+.attr("height", height)
+
+// Scales
+
+var x = d3.scale.linear().domain([0,1]).range([0,width]),
+y = d3.scale.linear().domain([0,1]).range([0,height]),
+r = d3.scale.linear().domain([0,1]).range([1,5]),
+c = d3.scale.linear().domain([0,1]).range(["hsl(250, 50%, 50%)", "rgb(225, 0, 35)"])
+.interpolate(d3.interpolateHsl)
+
+ 
+vis.selectAll("circle")
+.data(data)
+.enter().append("svg:circle")
+.attr("cx", function(d, i) {return x(Math.random()); })
+.attr("cy", function(d, i) { return  y(Math.random()); })
+.attr("fill", function() { return c(Math.random()) })
+.attr("fill-opacity", 1)
+.attr("r", function() { return r(Math.random()) })
+
+
+function transition() {
+
+  d3.selectAll("circle")
+  .transition()
+  .duration(1000)
+  .attr("cx", function(d, i) {return x(Math.random()); })
+
+}
+
+d3.select("#clickMe").on("click",function() {transition();});  
+
+</script>
+
+</body>
