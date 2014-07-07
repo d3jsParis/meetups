@@ -12,3 +12,4 @@ Agenda :
 - Welcome !
 - Case study
 - Principes clés de d3
+- Bières & network
