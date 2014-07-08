@@ -108,6 +108,17 @@ window.France = (function() {
     legend.exit().remove();
   };
 
+  Constructor.prototype.update = function (value) {
+    var self = this;
+    this.cValue = value;
+    this.quantile.domain(_.values(_.pick(this.data[value],this.group)));
+    this.container.selectAll('path')
+      .attr('fill', function (d) {return self.colors[self.quantile(self.data[value][d.name])];});
+    this.container.selectAll('.legend').remove();
+    this.addLegend();
+    return this;
+  };
+
   jQuery.extend(Constructor.prototype, jQuery.eventEmitter);
   return Constructor;
 

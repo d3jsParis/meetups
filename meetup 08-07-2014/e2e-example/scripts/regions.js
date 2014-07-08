@@ -57,6 +57,16 @@ d3.json('data/regions.json', function(france) {
       }, 30);
     });
 
+    function formater(value) {
+      return moment(data[value].date).format('MMMM YYYY');
+    }
+
+    $('.slider').slider( {
+        formater: formater
+      , min: 0
+      , max: data.length - 1
+      , value: data.length - 1
+    }).on('slide', function (event) { map.update(event.value); });
 
   });
 });
