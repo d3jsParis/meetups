@@ -13,6 +13,18 @@ svg = d3.select('.map').append('svg')
   .attr('width', width + margin.left + margin.right)
   .attr('height', height + margin.top + margin.bottom);
 
+d3.json('data/regions.json', function(france) {
+    var map = new France({ width: width
+                         , height: height
+                         , parent: svg
+                         , geoData: france
+                         })
+    map.init()
+      .show()
+
+
+  });
+
 
 
 })();
