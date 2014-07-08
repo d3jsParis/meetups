@@ -23,7 +23,7 @@ d3.json('data/regions.json', function(france) {
     var entries = d3.keys(data[0]).filter(function(key) { return key !== 'date'; });
     data.forEach(function (d) {
       entries.forEach(function(e) {
-			// PARSE FLOAT
+			// FORMATTAGE DES DONNEES
         d[e] = +d[e];
       });
     });
@@ -35,9 +35,27 @@ d3.json('data/regions.json', function(france) {
                          , group: entries
                          , geoData: france
                          , data: data})
+			, timer;
+
     map.init()
       .show()
       .addLegend();
+
+   map.on('maphover', function (event, data) {
+      $('.hoverover').css({ top: data.position[1]
+                          , left: data.position[0]
+      });
+      $('.hoverover').html(data.value + '%');
+    });
+    map.on('mapenter', function (event, data) {
+      clearTimeout(timer);
+      $('.hoverover').fadeIn(90);
+    });
+    map.on('mapleave', function (event, data) {
+      timer = setTimeout(function() {
+        $('.hoverover').fadeOut(90);
+      }, 30);
+    });
 
 
   });
